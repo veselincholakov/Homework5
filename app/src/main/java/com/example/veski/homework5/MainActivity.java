@@ -41,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickPopulate(View view){
-//        List<ListItem> items = dbManager.getAllRecords();
-//        if(items != null && items.size() >= 1) {
+        List<ListItem> items = dbManager.getAllRecords();
+        if(items != null && items.size() >= 1) {
             adapter = new ListAdapter(dbManager.getAllRecords(), ctx);
             recyclerView.setAdapter(adapter);
-//        }
+        }
     }
 
 

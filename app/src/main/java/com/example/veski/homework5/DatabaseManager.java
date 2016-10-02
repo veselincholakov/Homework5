@@ -19,7 +19,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "HW_name";
     private static final String TABLE_NAME = "ListItem" ;
-
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "some_name";
     private static final String KEY_INFO = "some_info";
@@ -38,26 +37,22 @@ public class DatabaseManager extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String UPGRADE_STATEMENT = "DROP IF EXISTS " + TABLE_NAME;
-
+        db.execSQL(UPGRADE_STATEMENT);
         onCreate(db);
     }
 
     void addRecord(ListItem record){
         SQLiteDatabase currentDB = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-
         values.put(KEY_ID, record.get_id());
         values.put(KEY_NAME, record.get_some_name());
         values.put(KEY_INFO, record.get_some_info());
         currentDB.insert(TABLE_NAME, null, values);
-
         currentDB.close();
     }
 
     public List<ListItem> getAllRecords(){
         SQLiteDatabase currentDB = this.getWritableDatabase();
-
         List<ListItem> listItems = new ArrayList<ListItem>();
         String SELECT = "SELECT * FROM " + TABLE_NAME;
         Cursor cursor =  currentDB.rawQuery(SELECT,null);
@@ -70,7 +65,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 cursor.moveToNext();
             }
         }
-
+        currentDB.close();
         return listItems;
     }
 }
